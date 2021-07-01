@@ -1,6 +1,7 @@
 package cn.wyz.tankword;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @author wangnanxiang
@@ -11,17 +12,21 @@ public class Tank {
     private static final int SPEED = 10;
     public static final int WIDTH = ResourceMgr.tankU.getWidth();
     public static final int HEIGHT = ResourceMgr.tankU.getHeight();
+    private Group group = Group.BAD;
 
     public boolean live = true;
 
-    TankFrame tankFrame;
+    private final TankFrame tankFrame;
 
-    private boolean moving = false;
+    private boolean moving = true;
 
-    public Tank(int x, int y, Dir dir, TankFrame tankFrame) {
+    private final Random random = new Random();
+
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tankFrame = tankFrame;
     }
 
@@ -55,6 +60,14 @@ public class Tank {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public void paint(Graphics g) {
@@ -100,12 +113,16 @@ public class Tank {
                 break;
             default:break;
         }
+
+        if(random.nextInt(10) > 8) {
+            this.fire();
+        }
     }
 
     public void fire() {
         int bX = x + ResourceMgr.tankU.getWidth() / 2 - ResourceMgr.bulletU.getWidth() / 2 + 2;
         int bY = y + ResourceMgr.tankU.getHeight() / 2 - ResourceMgr.bulletU.getHeight() / 2 + 3;
-        tankFrame.bulletList.add(new Bullet(bX, bY, dir,tankFrame));
+        tankFrame.bulletList.add(new Bullet(bX, bY, dir, this.group, tankFrame));
     }
 
     public void die() {
