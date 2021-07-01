@@ -1,6 +1,8 @@
 package cn.wyz.tankword;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -11,7 +13,7 @@ public class TankFrame extends Frame {
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     Tank tank = new Tank(200, 200 , Dir.UP, this);
-    Bullet bullet = new Bullet(300,300,Dir.UP);
+    List<Bullet> bulletList = new ArrayList<>();
 
     boolean bU = false, bD = false, bL = false, bR = false;
     public TankFrame() {
@@ -47,8 +49,15 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        Color color = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹的数量:" + bulletList.size(), 50, 50);
+        g.setColor(color);
+
         tank.paint(g);
-        bullet.paint(g);
+        for(int i = 0; i < bulletList.size(); i++) {
+            bulletList.get(i).paint(g);
+        }
     }
 
     class MyKeyListener extends KeyAdapter {
