@@ -16,6 +16,8 @@ public class TankFrame extends Frame {
     List<Bullet> bulletList = new ArrayList<>();
     List<Tank> tanks = new ArrayList<>();
 
+    Explode explode = new Explode(100, 100, this);
+
     boolean bU = false, bD = false, bL = false, bR = false;
     public TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -56,6 +58,7 @@ public class TankFrame extends Frame {
         g.drawString("敌人的数量:" + tanks.size(), 50, 80);
         g.setColor(color);
 
+        explode.paint(g);
         tank.paint(g);
         for(int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).paint(g);
