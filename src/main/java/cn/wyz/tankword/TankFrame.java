@@ -10,13 +10,12 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
 
-    public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    public static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
 
-    Tank tank = new Tank(200, 200 , Dir.UP, Group.GOOD, this);
+    Tank tank = new Tank(200, 600 , Dir.UP, Group.GOOD, this);
     List<Bullet> bulletList = new ArrayList<>();
     List<Tank> tanks = new ArrayList<>();
-
-    Explode explode = new Explode(100, 100, this);
+    List<Explode> explodeList = new ArrayList<>();
 
     boolean bU = false, bD = false, bL = false, bR = false;
     public TankFrame() {
@@ -56,9 +55,9 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("子弹的数量:" + bulletList.size(), 50, 50);
         g.drawString("敌人的数量:" + tanks.size(), 50, 80);
+        g.drawString("爆炸的数量:" + tanks.size(), 50, 110);
         g.setColor(color);
 
-        explode.paint(g);
         tank.paint(g);
         for(int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).paint(g);
@@ -67,7 +66,11 @@ public class TankFrame extends Frame {
         for(int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
         }
+        for (int i = 0; i < explodeList.size(); i++) {
+            explodeList.get(i).paint(g);
+        }
 
+        //爆炸检测
         for (int i = 0; i < bulletList.size(); i++) {
             for (int j = 0; j < tanks.size(); j++) {
                 bulletList.get(i).collideWith(tanks.get(j));
