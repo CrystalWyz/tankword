@@ -8,21 +8,20 @@ public class Explode {
 
     private int x, y;
 
-    private boolean live = true;
-    TankFrame tf = null;
+    TankFrame tankFrame = null;
 
     private int step = 0;
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.tankFrame = tankFrame;
     }
 
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if (step >= ResourceMgr.explodes.length) {
-            step = 0;
+            tankFrame.explodeList.remove(this);
         }
     }
 }
