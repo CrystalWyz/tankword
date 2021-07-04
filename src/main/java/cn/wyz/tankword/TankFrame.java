@@ -8,6 +8,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * @author wangnanxiang
+ */
 public class TankFrame extends Frame {
 
     public static final int GAME_WIDTH = PropertiesMgr.getInteger("gameWidth");
