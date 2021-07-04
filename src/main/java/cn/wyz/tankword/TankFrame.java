@@ -10,7 +10,8 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
 
-    public static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
+    public static final int GAME_WIDTH = PropertiesMgr.getInteger("gameWidth");
+    public static final int GAME_HEIGHT = PropertiesMgr.getInteger("gameHeight");
 
     Tank tank = new Tank(200, 600 , Dir.UP, Group.GOOD, this);
     List<Bullet> bulletList = new ArrayList<>();
