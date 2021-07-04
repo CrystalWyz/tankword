@@ -122,6 +122,23 @@ public class Tank {
             this.fire();
             this.randomDir();
         }
+
+        boundsCheck();
+    }
+
+    private void boundsCheck() {
+        if(this.x < 2) {
+            this.x = 2;
+        }
+        if(this.y < 32) {
+            this.y = 32;
+        }
+        if(this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) {
+            this.x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
+        }
+        if(this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) {
+            this.y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2;
+        }
     }
 
     private void randomDir() {
