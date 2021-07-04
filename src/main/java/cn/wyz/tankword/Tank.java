@@ -132,6 +132,8 @@ public class Tank {
 
     public void die() {
         this.live = false;
-        tankFrame.explodeList.add(new Explode(x, y, tankFrame));
+        int eX = this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+        int eY = this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+        tankFrame.explodeList.add(new Explode(eX, eY, tankFrame));
     }
 }
