@@ -14,14 +14,11 @@ public class Tank {
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
     private Group group = Group.BAD;
-
     public boolean live = true;
-
     private final TankFrame tankFrame;
-
     private boolean moving = true;
-
     private final Random random = new Random();
+    private final Rectangle rectangle = new Rectangle();
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.x = x;
@@ -32,6 +29,11 @@ public class Tank {
         if(group == Group.GOOD) {
             moving = false;
         }
+
+        this.rectangle.x = this.x;
+        this.rectangle.y = y;
+        this.rectangle.width = WIDTH;
+        this.rectangle.height = HEIGHT;
     }
 
     public int getX() {
@@ -98,6 +100,10 @@ public class Tank {
         }
     }
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
     private void move() {
         if (!moving) {
             return;
@@ -124,6 +130,9 @@ public class Tank {
         }
 
         boundsCheck();
+
+        this.rectangle.x = this.x;
+        this.rectangle.y = this.y;
     }
 
     private void boundsCheck() {

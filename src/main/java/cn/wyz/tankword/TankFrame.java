@@ -70,7 +70,7 @@ public class TankFrame extends Frame {
             explodeList.get(i).paint(g);
         }
 
-        //爆炸检测
+        //碰撞检测
         for (int i = 0; i < bulletList.size(); i++) {
             for (int j = 0; j < tanks.size(); j++) {
                 bulletList.get(i).collideWith(tanks.get(j));
