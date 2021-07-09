@@ -1,6 +1,8 @@
 package cn.wyz.tankword;
 
 import java.awt.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.Random;
 
 /**
@@ -75,6 +77,10 @@ public class Tank {
         this.group = group;
     }
 
+    public TankFrame getTankFrame() {
+        return tankFrame;
+    }
+
     public void paint(Graphics g) {
         if(!live) {
             tankFrame.tanks.remove(this);
@@ -124,8 +130,18 @@ public class Tank {
         }
 
         if(this.group == Group.BAD && random.nextInt(100) > 95) {
-            this.fire();
-            this.randomDir();
+            String badTank = PropertiesMgr.getString("badTank");
+            try {
+                //读取配置获取策略名
+                Class<?> clazz = Class.forName(badTank);
+                //得到策略实现类的getInstance()方法
+                Method getInstance = clazz.getDeclaredMethod("getInstance");
+                //invoke执行该方法
+                this.fire((FireStrategy) getInstance.invoke(null));
+                this.randomDir();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         boundsCheck();
@@ -153,10 +169,8 @@ public class Tank {
         this.dir = Dir.values()[random.nextInt(4)];
     }
 
-    public void fire() {
-        int bX = x + ResourceMgr.goodTankU.getWidth() / 2 - ResourceMgr.bulletU.getWidth() / 2;
-        int bY = y + ResourceMgr.goodTankU.getHeight() / 2 - ResourceMgr.bulletU.getHeight() / 2;
-        tankFrame.bulletList.add(new Bullet(bX, bY, dir, this.group, tankFrame));
+    public void fire(FireStrategy fs) {
+        fs.fire(this);
     }
 
     public void die() {

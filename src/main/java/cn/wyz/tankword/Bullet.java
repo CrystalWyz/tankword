@@ -11,7 +11,7 @@ public class Bullet {
     private Dir dir;
     private final TankFrame tankFrame;
     private Group group = Group.BAD;
-    private Rectangle rectangle = new Rectangle();
+    private final Rectangle rectangle = new Rectangle();
 
     public Bullet(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.x = x;
@@ -24,6 +24,8 @@ public class Bullet {
         this.rectangle.y = y;
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
+
+        this.tankFrame.bulletList.add(this);
     }
 
     public int getX() {
@@ -56,6 +58,10 @@ public class Bullet {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public TankFrame getTankFrame() {
+        return tankFrame;
     }
 
     public void paint(Graphics g) {

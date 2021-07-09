@@ -7,12 +7,24 @@ import java.util.Objects;
 
 /**
  * @author wangnanxiang
+ * 单例模式 内部类形式 懒汉式
  */
 public class ResourceMgr {
     public static BufferedImage goodTankU, goodTankD, goodTankL, goodTankR;
     public static BufferedImage badTankU, badTankD, badTankL, badTankR;
     public static BufferedImage bulletU, bulletD, bulletL,bulletR;
     public static BufferedImage[] explodes = new BufferedImage[16];
+
+    private static class ResourceMgrHolder {
+        private static final ResourceMgr INSTANCE = new ResourceMgr();
+    }
+
+    private ResourceMgr() {
+    }
+
+    public static ResourceMgr getInstance() {
+        return ResourceMgrHolder.INSTANCE;
+    }
 
     static {
         try {

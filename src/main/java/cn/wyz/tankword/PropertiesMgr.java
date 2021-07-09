@@ -6,9 +6,17 @@ import java.util.Properties;
 
 /**
  * @author wangnanxiang
+ * 单例模式 简单饿汉式
  */
 public class PropertiesMgr {
     static Properties properties = new Properties();
+
+    private PropertiesMgr() {
+    }
+
+    public static Properties getInstance() {
+        return properties;
+    }
 
     static {
         try {

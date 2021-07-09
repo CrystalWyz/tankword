@@ -1,6 +1,7 @@
 package cn.wyz.tankword;
 
 import java.awt.*;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.KeyAdapter;
@@ -12,7 +13,6 @@ import java.awt.event.WindowEvent;
  * @author wangnanxiang
  */
 public class TankFrame extends Frame {
-
     public static final int GAME_WIDTH = PropertiesMgr.getInteger("gameWidth");
     public static final int GAME_HEIGHT = PropertiesMgr.getInteger("gameHeight");
 
@@ -84,8 +84,8 @@ public class TankFrame extends Frame {
 
     class MyKeyListener extends KeyAdapter {
         @Override
-        public void keyPressed(KeyEvent e) {
-            int keyCode = e.getKeyCode();
+        public void keyPressed(KeyEvent keyEvent) {
+            int keyCode = keyEvent.getKeyCode();
             switch (keyCode) {
                 case KeyEvent.VK_UP:
                     bU = true;
@@ -100,7 +100,13 @@ public class TankFrame extends Frame {
                     bR = true;
                     break;
                 case KeyEvent.VK_SPACE:
-                    tank.fire();
+                    try {
+                        Class<?> clazz = Class.forName(PropertiesMgr.getString("goodTank"));
+                        Method getInstance = clazz.getDeclaredMethod("getInstance");
+                        tank.fire((FireStrategy) getInstance.invoke(null));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 default:break;
             }
 
