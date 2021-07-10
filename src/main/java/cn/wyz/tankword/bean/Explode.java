@@ -1,5 +1,6 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.bean;
 
+import cn.wyz.tankword.Mgr.ResourceMgr;
 import cn.wyz.tankword.factory.BaseExplode;
 
 import java.awt.*;

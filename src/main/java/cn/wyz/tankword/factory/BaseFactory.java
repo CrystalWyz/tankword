@@ -1,8 +1,8 @@
 package cn.wyz.tankword.factory;
 
-import cn.wyz.tankword.Dir;
-import cn.wyz.tankword.Group;
-import cn.wyz.tankword.TankFrame;
+import cn.wyz.tankword.constant.Dir;
+import cn.wyz.tankword.constant.Group;
+import cn.wyz.tankword.bean.TankFrame;
 
 /**
  * @author wangnanxiang

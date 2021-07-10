@@ -1,4 +1,11 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.Strategy;
+
+import cn.wyz.tankword.Mgr.ResourceMgr;
+import cn.wyz.tankword.bean.Audio;
+import cn.wyz.tankword.bean.Bullet;
+import cn.wyz.tankword.bean.Tank;
+import cn.wyz.tankword.constant.Dir;
+import cn.wyz.tankword.constant.Group;
 
 /**
  * @author wangnanxiang

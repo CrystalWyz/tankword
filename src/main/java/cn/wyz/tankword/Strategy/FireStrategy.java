@@ -1,4 +1,6 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.Strategy;
+
+import cn.wyz.tankword.bean.Tank;
 
 @FunctionalInterface
 public interface FireStrategy {

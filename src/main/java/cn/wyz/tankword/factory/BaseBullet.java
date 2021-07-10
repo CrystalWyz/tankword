@@ -1,7 +1,5 @@
 package cn.wyz.tankword.factory;
 
-import cn.wyz.tankword.Tank;
-
 import java.awt.*;
 
 /**

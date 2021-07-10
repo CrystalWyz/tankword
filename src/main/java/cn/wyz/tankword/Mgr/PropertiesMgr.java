@@ -1,4 +1,4 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.Mgr;
 
 import java.io.IOException;
 import java.util.Objects;

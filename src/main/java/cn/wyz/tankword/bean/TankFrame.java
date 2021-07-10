@@ -1,5 +1,10 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.bean;
 
+import cn.wyz.tankword.Mgr.PropertiesMgr;
+import cn.wyz.tankword.constant.Dir;
+import cn.wyz.tankword.Strategy.FireStrategy;
+import cn.wyz.tankword.bean.Tank;
+import cn.wyz.tankword.constant.Group;
 import cn.wyz.tankword.factory.*;
 
 import java.awt.*;

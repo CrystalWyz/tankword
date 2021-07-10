@@ -1,5 +1,8 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.bean;
 
+import cn.wyz.tankword.constant.Group;
+import cn.wyz.tankword.Mgr.ResourceMgr;
+import cn.wyz.tankword.constant.Dir;
 import cn.wyz.tankword.factory.BaseBullet;
 import cn.wyz.tankword.factory.BaseTank;
 

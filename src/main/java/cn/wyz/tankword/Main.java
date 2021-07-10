@@ -1,6 +1,10 @@
 package cn.wyz.tankword;
 
-import java.util.Objects;
+import cn.wyz.tankword.Mgr.PropertiesMgr;
+import cn.wyz.tankword.bean.TankFrame;
+import cn.wyz.tankword.constant.Dir;
+import cn.wyz.tankword.bean.Tank;
+import cn.wyz.tankword.constant.Group;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
