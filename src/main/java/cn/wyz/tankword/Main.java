@@ -8,7 +8,7 @@ public class Main {
         int initTankCount = PropertiesMgr.getInteger("initTankCount");
         //初始化敌方坦克
         for (int i = 0; i < initTankCount; i++) {
-            tankFrame.tanks.add(new Tank(i * 60, 100, Dir.DOWN, Group.BAD, tankFrame));
+            tankFrame.getTanks().add(new Tank(i * 60, 100, Dir.DOWN, Group.BAD, tankFrame));
         }
 
         //背景音效

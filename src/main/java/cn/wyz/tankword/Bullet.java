@@ -1,8 +1,14 @@
 package cn.wyz.tankword;
 
+import cn.wyz.tankword.factory.BaseBullet;
+import cn.wyz.tankword.factory.BaseTank;
+
 import java.awt.*;
 
-public class Bullet {
+/**
+ * @author wangnanxiang
+ */
+public class Bullet extends BaseBullet {
     private static final int SPEED = 15;
     public static final int WIDTH = ResourceMgr.bulletU.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletU.getHeight();
@@ -25,7 +31,7 @@ public class Bullet {
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
 
-        this.tankFrame.bulletList.add(this);
+        this.tankFrame.getBulletList().add(this);
     }
 
     public int getX() {
@@ -64,9 +70,10 @@ public class Bullet {
         return tankFrame;
     }
 
+    @Override
     public void paint(Graphics g) {
         if(!live) {
-            tankFrame.bulletList.remove(this);
+            tankFrame.getBulletList().remove(this);
         }
         move();
 
@@ -112,12 +119,13 @@ public class Bullet {
         this.rectangle.y = this.y;
     }
 
-    public void collideWith(Tank tank) {
-        if(this.getGroup() == tank.getGroup()) {
+    @Override
+    public void collideWith(BaseTank baseTank) {
+        if(this.getGroup() == baseTank.getGroup()) {
             return;
         }
-        if(this.rectangle.intersects(tank.getRectangle())) {
-            tank.die();
+        if(this.rectangle.intersects(baseTank.getRectangle())) {
+            baseTank.die();
             this.die();
         }
     }

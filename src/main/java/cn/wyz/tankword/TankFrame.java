@@ -1,5 +1,7 @@
 package cn.wyz.tankword;
 
+import cn.wyz.tankword.factory.*;
+
 import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -16,10 +18,92 @@ public class TankFrame extends Frame {
     public static final int GAME_WIDTH = PropertiesMgr.getInteger("gameWidth");
     public static final int GAME_HEIGHT = PropertiesMgr.getInteger("gameHeight");
 
-    Tank tank = new Tank(200, 600 , Dir.UP, Group.GOOD, this);
-    List<Bullet> bulletList = new ArrayList<>();
-    List<Tank> tanks = new ArrayList<>();
-    List<Explode> explodeList = new ArrayList<>();
+    private Tank tank = new Tank(200, 600 , Dir.UP, Group.GOOD, this);
+    private List<BaseBullet> bulletList = new ArrayList<>();
+    private List<BaseTank> tanks = new ArrayList<>();
+    private List<BaseExplode> explodeList = new ArrayList<>();
+
+    private BaseFactory baseFactory = new DefaultFactory();
+
+    public static int getGameWidth() {
+        return GAME_WIDTH;
+    }
+
+    public static int getGameHeight() {
+        return GAME_HEIGHT;
+    }
+
+    public Tank getTank() {
+        return tank;
+    }
+
+    public void setTank(Tank tank) {
+        this.tank = tank;
+    }
+
+    public List<BaseBullet> getBulletList() {
+        return bulletList;
+    }
+
+    public void setBulletList(List<BaseBullet> bulletList) {
+        this.bulletList = bulletList;
+    }
+
+    public List<BaseTank> getTanks() {
+        return tanks;
+    }
+
+    public void setTanks(List<BaseTank> tanks) {
+        this.tanks = tanks;
+    }
+
+    public List<BaseExplode> getExplodeList() {
+        return explodeList;
+    }
+
+    public void setExplodeList(List<BaseExplode> explodeList) {
+        this.explodeList = explodeList;
+    }
+
+    public BaseFactory getBaseFactory() {
+        return baseFactory;
+    }
+
+    public void setBaseFactory(BaseFactory baseFactory) {
+        this.baseFactory = baseFactory;
+    }
+
+    public boolean isbU() {
+        return bU;
+    }
+
+    public void setbU(boolean bU) {
+        this.bU = bU;
+    }
+
+    public boolean isbD() {
+        return bD;
+    }
+
+    public void setbD(boolean bD) {
+        this.bD = bD;
+    }
+
+    public boolean isbL() {
+        return bL;
+    }
+
+    public void setbL(boolean bL) {
+        this.bL = bL;
+    }
+
+    public boolean isbR() {
+        return bR;
+    }
+
+    public void setbR(boolean bR) {
+        this.bR = bR;
+    }
 
     boolean bU = false, bD = false, bL = false, bR = false;
     public TankFrame() {

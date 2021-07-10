@@ -1,89 +1,36 @@
 package cn.wyz.tankword;
 
+import cn.wyz.tankword.factory.BaseTank;
+
 import java.awt.*;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Random;
 
 /**
  * @author wangnanxiang
  */
-public class Tank {
-    private int x, y;
-    private Dir dir;
-    private static final int SPEED = 3;
-    public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
-    public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
-    private Group group = Group.BAD;
-    public boolean live = true;
-    private final TankFrame tankFrame;
-    private boolean moving = true;
-    private final Random random = new Random();
-    private final Rectangle rectangle = new Rectangle();
-
+public class Tank extends BaseTank {
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+        super(tankFrame);
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tankFrame = tankFrame;
-        if(group == Group.GOOD) {
-            moving = false;
-        }
 
         this.rectangle.x = this.x;
         this.rectangle.y = y;
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
+
+        if(group == Group.GOOD) {
+            moving = false;
+        }
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public Dir getDir() {
-        return dir;
-    }
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public TankFrame getTankFrame() {
-        return tankFrame;
-    }
-
+    @Override
     public void paint(Graphics g) {
         if(!live) {
-            tankFrame.tanks.remove(this);
+            tankFrame.getTanks().remove(this);
         }
 
         move();
@@ -105,11 +52,8 @@ public class Tank {
         }
     }
 
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
-
-    private void move() {
+    @Override
+    public void move() {
         if (!moving) {
             return;
         }
@@ -150,7 +94,8 @@ public class Tank {
         this.rectangle.y = this.y;
     }
 
-    private void boundsCheck() {
+    @Override
+    public void boundsCheck() {
         if(this.x < 2) {
             this.x = 2;
         }
@@ -165,18 +110,21 @@ public class Tank {
         }
     }
 
-    private void randomDir() {
+    @Override
+    public void randomDir() {
         this.dir = Dir.values()[random.nextInt(4)];
     }
 
+    @Override
     public void fire(FireStrategy fs) {
         fs.fire(this);
     }
 
+    @Override
     public void die() {
         this.live = false;
         int eX = this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2;
         int eY = this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-        tankFrame.explodeList.add(new Explode(eX, eY, tankFrame));
+        tankFrame.getExplodeList().add(tankFrame.getBaseFactory().creatExplode(eX, eY, tankFrame));
     }
 }
