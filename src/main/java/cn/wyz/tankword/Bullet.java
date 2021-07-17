@@ -2,7 +2,10 @@ package cn.wyz.tankword;
 
 import java.awt.*;
 
-public class Bullet {
+/**
+ * @author wangnanxiang
+ */
+public class Bullet extends BaseGameObject {
     private static final int SPEED = 15;
     public static final int WIDTH = ResourceMgr.bulletU.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletU.getHeight();
@@ -25,7 +28,7 @@ public class Bullet {
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
 
-        this.gameModel.getBulletList().add(this);
+        this.gameModel.getBaseGameObjectList().add(this);
     }
 
     public int getX() {
@@ -60,9 +63,14 @@ public class Bullet {
         this.group = group;
     }
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    @Override
     public void paint(Graphics g) {
         if(!live) {
-            gameModel.getBulletList().remove(this);
+            gameModel.getBaseGameObjectList().remove(this);
         }
         move();
 
@@ -118,7 +126,7 @@ public class Bullet {
         }
     }
 
-    private void die() {
+    public void die() {
         live = false;
     }
 }

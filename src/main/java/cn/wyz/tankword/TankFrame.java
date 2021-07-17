@@ -1,5 +1,7 @@
 package cn.wyz.tankword;
 
+import cn.wyz.tankword.strategy.FireStrategy;
+
 import java.awt.*;
 import java.lang.reflect.Method;
 import java.awt.event.KeyAdapter;

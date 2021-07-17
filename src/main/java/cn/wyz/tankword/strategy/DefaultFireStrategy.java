@@ -1,10 +1,12 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.strategy;
+
+import cn.wyz.tankword.*;
 
 /**
  * @author wangnanxiang
  * 单例模式 double check lock
  */
-public class DefaultFireStrategy implements FireStrategy{
+public class DefaultFireStrategy implements FireStrategy {
 
     private static volatile DefaultFireStrategy defaultFireStrategy;
 

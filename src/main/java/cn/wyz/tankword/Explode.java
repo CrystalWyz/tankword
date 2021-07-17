@@ -2,7 +2,10 @@ package cn.wyz.tankword;
 
 import java.awt.*;
 
-public class Explode {
+/**
+ * @author wangnanxiang
+ */
+public class Explode extends BaseGameObject {
     public static int WIDTH = ResourceMgr.explodes[0].getWidth();
     public static int HEIGHT = ResourceMgr.explodes[0].getHeight();
 
@@ -18,10 +21,11 @@ public class Explode {
         this.gameModel = gameModel;
     }
 
+    @Override
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if (step >= ResourceMgr.explodes.length) {
-            gameModel.getExplodeList().remove(this);
+            gameModel.getBaseGameObjectList().remove(this);
         }
     }
 }

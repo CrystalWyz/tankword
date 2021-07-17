@@ -1,14 +1,16 @@
 package cn.wyz.tankword;
 
+import cn.wyz.tankword.strategy.FireStrategy;
+
 import java.awt.*;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Random;
 
 /**
  * @author wangnanxiang
  */
-public class Tank {
+public class Tank extends BaseGameObject {
+    private int lastX, lastY;
     private int x, y;
     private Dir dir;
     private static final int SPEED = 3;
@@ -24,6 +26,8 @@ public class Tank {
     public Tank(int x, int y, Dir dir, Group group, GameModel gameModel) {
         this.x = x;
         this.y = y;
+        this.lastX = x;
+        this.lastY = y;
         this.dir = dir;
         this.group = group;
         if(group == Group.GOOD) {
@@ -54,6 +58,22 @@ public class Tank {
         this.y = y;
     }
 
+    public int getLastX() {
+        return lastX;
+    }
+
+    public void setLastX(int lastX) {
+        this.lastX = lastX;
+    }
+
+    public int getLastY() {
+        return lastY;
+    }
+
+    public void setLastY(int lastY) {
+        this.lastY = lastY;
+    }
+
     public Dir getDir() {
         return dir;
     }
@@ -82,9 +102,10 @@ public class Tank {
         return gameModel;
     }
 
+    @Override
     public void paint(Graphics g) {
         if(!live) {
-            gameModel.getTanks().remove(this);
+            gameModel.getBaseGameObjectList().remove(this);
         }
 
         move();
@@ -116,15 +137,19 @@ public class Tank {
         }
         switch (dir) {
             case UP:
+                lastY = y;
                 y -= SPEED;
                 break;
             case DOWN:
+                lastY = y;
                 y += SPEED;
                 break;
             case LEFT:
+                lastX = x;
                 x -= SPEED;
                 break;
             case RIGHT:
+                lastX = x;
                 x += SPEED;
                 break;
             default:break;
@@ -166,7 +191,7 @@ public class Tank {
         }
     }
 
-    private void randomDir() {
+    public void randomDir() {
         this.dir = Dir.values()[random.nextInt(4)];
     }
 
@@ -178,6 +203,6 @@ public class Tank {
         this.live = false;
         int eX = this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2;
         int eY = this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-        gameModel.getExplodeList().add(new Explode(eX, eY, getGameModel()));
+        gameModel.getBaseGameObjectList().add(new Explode(eX, eY, getGameModel()));
     }
 }
