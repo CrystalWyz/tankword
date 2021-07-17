@@ -9,23 +9,23 @@ public class Bullet {
     private Boolean live = true;
     private int x, y;
     private Dir dir;
-    private final TankFrame tankFrame;
+    private final GameModel gameModel;
     private Group group = Group.BAD;
     private final Rectangle rectangle = new Rectangle();
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+    public Bullet(int x, int y, Dir dir, Group group, GameModel gameModel) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tankFrame = tankFrame;
+        this.gameModel = gameModel;
 
         this.rectangle.x = this.x;
         this.rectangle.y = y;
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
 
-        this.tankFrame.bulletList.add(this);
+        this.gameModel.getBulletList().add(this);
     }
 
     public int getX() {
@@ -60,13 +60,9 @@ public class Bullet {
         this.group = group;
     }
 
-    public TankFrame getTankFrame() {
-        return tankFrame;
-    }
-
     public void paint(Graphics g) {
         if(!live) {
-            tankFrame.bulletList.remove(this);
+            gameModel.getBulletList().remove(this);
         }
         move();
 

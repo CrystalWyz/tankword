@@ -16,20 +16,21 @@ public class Tank {
     public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
     private Group group = Group.BAD;
     public boolean live = true;
-    private final TankFrame tankFrame;
+    private final GameModel gameModel;
     private boolean moving = true;
     private final Random random = new Random();
     private final Rectangle rectangle = new Rectangle();
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir, Group group, GameModel gameModel) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tankFrame = tankFrame;
         if(group == Group.GOOD) {
             moving = false;
         }
+
+        this.gameModel = gameModel;
 
         this.rectangle.x = this.x;
         this.rectangle.y = y;
@@ -77,13 +78,13 @@ public class Tank {
         this.group = group;
     }
 
-    public TankFrame getTankFrame() {
-        return tankFrame;
+    public GameModel getGameModel() {
+        return gameModel;
     }
 
     public void paint(Graphics g) {
         if(!live) {
-            tankFrame.tanks.remove(this);
+            gameModel.getTanks().remove(this);
         }
 
         move();
@@ -177,6 +178,6 @@ public class Tank {
         this.live = false;
         int eX = this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2;
         int eY = this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-        tankFrame.explodeList.add(new Explode(eX, eY, tankFrame));
+        gameModel.getExplodeList().add(new Explode(eX, eY, getGameModel()));
     }
 }

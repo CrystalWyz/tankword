@@ -8,20 +8,20 @@ public class Explode {
 
     private int x, y;
 
-    TankFrame tankFrame = null;
+    private GameModel gameModel = null;
 
     private int step = 0;
 
-    public Explode(int x, int y, TankFrame tankFrame) {
+    public Explode(int x, int y, GameModel gameModel) {
         this.x = x;
         this.y = y;
-        this.tankFrame = tankFrame;
+        this.gameModel = gameModel;
     }
 
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
         if (step >= ResourceMgr.explodes.length) {
-            tankFrame.explodeList.remove(this);
+            gameModel.getExplodeList().remove(this);
         }
     }
 }

@@ -2,8 +2,6 @@ package cn.wyz.tankword;
 
 import java.awt.*;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -16,10 +14,7 @@ public class TankFrame extends Frame {
     public static final int GAME_WIDTH = PropertiesMgr.getInteger("gameWidth");
     public static final int GAME_HEIGHT = PropertiesMgr.getInteger("gameHeight");
 
-    Tank tank = new Tank(200, 600 , Dir.UP, Group.GOOD, this);
-    List<Bullet> bulletList = new ArrayList<>();
-    List<Tank> tanks = new ArrayList<>();
-    List<Explode> explodeList = new ArrayList<>();
+    GameModel gameModel = new GameModel();
 
     boolean bU = false, bD = false, bL = false, bR = false;
     public TankFrame() {
@@ -45,7 +40,7 @@ public class TankFrame extends Frame {
             offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
-        Color color = gOffScreen.getColor();;
+        Color color = gOffScreen.getColor();
         gOffScreen.setColor(Color.BLACK);
         gOffScreen.fillRect(0,0, GAME_WIDTH, GAME_HEIGHT);
         gOffScreen.setColor(color);
@@ -55,31 +50,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color color = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹的数量:" + bulletList.size(), 50, 50);
-        g.drawString("敌人的数量:" + tanks.size(), 50, 80);
-        g.drawString("爆炸的数量:" + tanks.size(), 50, 110);
-        g.setColor(color);
-
-        tank.paint(g);
-        for(int i = 0; i < bulletList.size(); i++) {
-            bulletList.get(i).paint(g);
-        }
-
-        for(int i = 0; i < tanks.size(); i++) {
-            tanks.get(i).paint(g);
-        }
-        for (int i = 0; i < explodeList.size(); i++) {
-            explodeList.get(i).paint(g);
-        }
-
-        //碰撞检测
-        for (int i = 0; i < bulletList.size(); i++) {
-            for (int j = 0; j < tanks.size(); j++) {
-                bulletList.get(i).collideWith(tanks.get(j));
-            }
-        }
+        gameModel.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -103,7 +74,7 @@ public class TankFrame extends Frame {
                     try {
                         Class<?> clazz = Class.forName(PropertiesMgr.getString("goodTank"));
                         Method getInstance = clazz.getDeclaredMethod("getInstance");
-                        tank.fire((FireStrategy) getInstance.invoke(null));
+                        gameModel.getMainTank().fire((FireStrategy) getInstance.invoke(null));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -139,20 +110,20 @@ public class TankFrame extends Frame {
 
     private void setMainTankDir() {
         if(!bU && !bD && !bL && !bR) {
-            tank.setMoving(false);
+            gameModel.getMainTank().setMoving(false);
         } else {
-            tank.setMoving(true);
+            gameModel.getMainTank().setMoving(true);
             if(bU) {
-                tank.setDir(Dir.UP);
+                gameModel.getMainTank().setDir(Dir.UP);
             }
             if(bD) {
-                tank.setDir(Dir.DOWN);
+                gameModel.getMainTank().setDir(Dir.DOWN);
             }
             if(bL) {
-                tank.setDir(Dir.LEFT);
+                gameModel.getMainTank().setDir(Dir.LEFT);
             }
             if(bR) {
-                tank.setDir(Dir.RIGHT);
+                gameModel.getMainTank().setDir(Dir.RIGHT);
             }
         }
     }
