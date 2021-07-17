@@ -17,12 +17,11 @@ public class Tank extends BaseGameObject {
     public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
     private Group group = Group.BAD;
     public boolean live = true;
-    private final GameModel gameModel;
     private boolean moving = true;
     private final Random random = new Random();
     private final Rectangle rectangle = new Rectangle();
 
-    public Tank(int x, int y, Dir dir, Group group, GameModel gameModel) {
+    public Tank(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.lastX = x;
@@ -32,8 +31,6 @@ public class Tank extends BaseGameObject {
         if(group == Group.GOOD) {
             moving = false;
         }
-
-        this.gameModel = gameModel;
 
         this.rectangle.x = this.x;
         this.rectangle.y = y;
@@ -81,14 +78,10 @@ public class Tank extends BaseGameObject {
         this.group = group;
     }
 
-    public GameModel getGameModel() {
-        return gameModel;
-    }
-
     @Override
     public void paint(Graphics g) {
         if(!live) {
-            gameModel.getBaseGameObjectList().remove(this);
+            GameModel.getInstance().getBaseGameObjectList().remove(this);
         }
 
         move();
@@ -191,6 +184,6 @@ public class Tank extends BaseGameObject {
         this.live = false;
         int eX = this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2;
         int eY = this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-        gameModel.getBaseGameObjectList().add(new Explode(eX, eY, getGameModel()));
+        GameModel.getInstance().getBaseGameObjectList().add(new Explode(eX, eY));
     }
 }

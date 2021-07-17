@@ -16,8 +16,6 @@ public class TankFrame extends Frame {
     public static final int GAME_WIDTH = PropertiesMgr.getInteger("gameWidth");
     public static final int GAME_HEIGHT = PropertiesMgr.getInteger("gameHeight");
 
-    GameModel gameModel = new GameModel();
-
     boolean bU = false, bD = false, bL = false, bR = false;
     public TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -52,7 +50,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        gameModel.paint(g);
+        GameModel.getInstance().paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -76,7 +74,7 @@ public class TankFrame extends Frame {
                     try {
                         Class<?> clazz = Class.forName(PropertiesMgr.getString("goodTank"));
                         Method getInstance = clazz.getDeclaredMethod("getInstance");
-                        gameModel.getMainTank().fire((FireStrategy) getInstance.invoke(null));
+                        GameModel.getInstance().getMainTank().fire((FireStrategy) getInstance.invoke(null));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -112,20 +110,20 @@ public class TankFrame extends Frame {
 
     private void setMainTankDir() {
         if(!bU && !bD && !bL && !bR) {
-            gameModel.getMainTank().setMoving(false);
+            GameModel.getInstance().getMainTank().setMoving(false);
         } else {
-            gameModel.getMainTank().setMoving(true);
+            GameModel.getInstance().getMainTank().setMoving(true);
             if(bU) {
-                gameModel.getMainTank().setDir(Dir.UP);
+                GameModel.getInstance().getMainTank().setDir(Dir.UP);
             }
             if(bD) {
-                gameModel.getMainTank().setDir(Dir.DOWN);
+                GameModel.getInstance().getMainTank().setDir(Dir.DOWN);
             }
             if(bL) {
-                gameModel.getMainTank().setDir(Dir.LEFT);
+                GameModel.getInstance().getMainTank().setDir(Dir.LEFT);
             }
             if(bR) {
-                gameModel.getMainTank().setDir(Dir.RIGHT);
+                GameModel.getInstance().getMainTank().setDir(Dir.RIGHT);
             }
         }
     }

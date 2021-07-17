@@ -11,23 +11,21 @@ public class Bullet extends BaseGameObject {
     public static final int HEIGHT = ResourceMgr.bulletU.getHeight();
     private Boolean live = true;
     private Dir dir;
-    private final GameModel gameModel;
     private Group group = Group.BAD;
     private final Rectangle rectangle = new Rectangle();
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel gameModel) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gameModel = gameModel;
 
         this.rectangle.x = this.x;
         this.rectangle.y = y;
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
 
-        this.gameModel.getBaseGameObjectList().add(this);
+        GameModel.getInstance().getBaseGameObjectList().add(this);
     }
 
     public Dir getDir() {
@@ -53,7 +51,7 @@ public class Bullet extends BaseGameObject {
     @Override
     public void paint(Graphics g) {
         if(!live) {
-            gameModel.getBaseGameObjectList().remove(this);
+            GameModel.getInstance().getBaseGameObjectList().remove(this);
         }
         move();
 

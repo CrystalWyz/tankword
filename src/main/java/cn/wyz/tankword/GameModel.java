@@ -11,11 +11,13 @@ import java.util.List;
  */
 public class GameModel {
 
+    private static final GameModel GAME_MODEL = new GameModel();
+
 //    private List<Bullet> bulletList = new ArrayList<>();
 //    private List<Tank> tanks = new ArrayList<>();
 //    private List<Explode> explodeList = new ArrayList<>();
     private List<BaseGameObject> baseGameObjectList = new ArrayList<>();
-    private final Tank tank = new Tank(200, 600 , Dir.UP, Group.GOOD, this);
+    private final Tank tank = new Tank(200, 600 , Dir.UP, Group.GOOD);
 //    private final Collider bulletTankCollider = new BulletTankCollider();
 //    private final Collider tankTankCollider = new TankTankCollider();
     private final ColliderChain colliderChain = new ColliderChain();
@@ -36,17 +38,21 @@ public class GameModel {
         this.baseGameObjectList.remove(baseGameObject);
     }
 
-    public GameModel() {
+    private GameModel() {
         int initTankCount = PropertiesMgr.getInteger("initTankCount");
         //初始化敌方坦克
         for (int i = 0; i < initTankCount; i++) {
-            this.add(new Tank(i * 60, 100, Dir.DOWN, Group.BAD, this));
+            this.add(new Tank(i * 60, 60, Dir.DOWN, Group.BAD));
         }
 
         this.add(new Wall(150, 150, 200, 50));
         this.add(new Wall(550, 150, 200, 50));
         this.add(new Wall(300, 300, 50, 200));
         this.add(new Wall(550, 300, 50, 200));
+    }
+
+    public static GameModel getInstance() {
+        return GAME_MODEL;
     }
 
     public void paint(Graphics g) {

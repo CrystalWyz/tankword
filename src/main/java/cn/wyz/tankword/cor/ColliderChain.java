@@ -15,6 +15,7 @@ public class ColliderChain implements Collider {
         this.add(new BulletTankCollider());
         this.add(new BulletWallCollider());
         this.add(new TankTankCollider());
+        this.add(new TankWallCollider());
     }
 
     public void add(Collider collider) {
