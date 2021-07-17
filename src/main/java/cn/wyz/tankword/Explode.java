@@ -9,8 +9,6 @@ public class Explode extends BaseGameObject {
     public static int WIDTH = ResourceMgr.explodes[0].getWidth();
     public static int HEIGHT = ResourceMgr.explodes[0].getHeight();
 
-    private int x, y;
-
     private GameModel gameModel = null;
 
     private int step = 0;

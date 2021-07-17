@@ -18,10 +18,8 @@ public class TankTankCollider implements Collider {
             Tank tank2 = (Tank) bgo2;
 
             if(tank1.getRectangle().intersects(tank2.getRectangle())) {
-                tank1.setX(tank1.getLastX());
-                tank1.setY(tank1.getLastY());
-                tank2.setY(tank2.getLastY());
-                tank2.setY(tank2.getLastY());
+                tank1.back();
+                tank2.back();
 
                 tank1.randomDir();
                 tank2.randomDir();

@@ -11,7 +11,6 @@ import java.util.Random;
  */
 public class Tank extends BaseGameObject {
     private int lastX, lastY;
-    private int x, y;
     private Dir dir;
     private static final int SPEED = 3;
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
@@ -40,22 +39,6 @@ public class Tank extends BaseGameObject {
         this.rectangle.y = y;
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public int getLastX() {
@@ -189,6 +172,11 @@ public class Tank extends BaseGameObject {
         if(this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) {
             this.y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2;
         }
+    }
+
+    public void back() {
+        this.x = lastX;
+        this.y = lastY;
     }
 
     public void randomDir() {

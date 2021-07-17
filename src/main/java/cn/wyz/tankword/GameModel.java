@@ -1,12 +1,8 @@
 package cn.wyz.tankword;
 
-import cn.wyz.tankword.cor.BulletTankCollider;
-import cn.wyz.tankword.cor.Collider;
 import cn.wyz.tankword.cor.ColliderChain;
-import cn.wyz.tankword.cor.TankTankCollider;
 
 import java.awt.*;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +42,11 @@ public class GameModel {
         for (int i = 0; i < initTankCount; i++) {
             this.add(new Tank(i * 60, 100, Dir.DOWN, Group.BAD, this));
         }
+
+        this.add(new Wall(150, 150, 200, 50));
+        this.add(new Wall(550, 150, 200, 50));
+        this.add(new Wall(300, 300, 50, 200));
+        this.add(new Wall(550, 300, 50, 200));
     }
 
     public void paint(Graphics g) {
