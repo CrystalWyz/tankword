@@ -7,6 +7,8 @@ import java.awt.*;
  */
 public abstract class BaseGameObject {
     protected int x, y;
+    protected static final int WIDTH = 0;
+    protected static final int HEIGHT = 0;
 
     public int getX() {
         return x;
@@ -23,6 +25,15 @@ public abstract class BaseGameObject {
     public void setY(int y) {
         this.y = y;
     }
+
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    public int getHeight() {
+        return HEIGHT;
+    }
+
 
     /**
      * 绘画方法

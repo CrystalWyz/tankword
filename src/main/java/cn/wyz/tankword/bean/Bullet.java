@@ -55,6 +55,16 @@ public class Bullet extends BaseGameObject {
     }
 
     @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    @Override
     public void paint(Graphics g) {
         if(!live) {
             GameModel.getInstance().getBaseGameObjectList().remove(this);

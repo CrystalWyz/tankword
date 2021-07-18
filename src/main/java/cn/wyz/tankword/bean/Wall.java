@@ -12,16 +12,18 @@ public class Wall extends BaseGameObject {
 
     private Rectangle rectangle;
 
+    @Override
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     public void setWidth(int width) {
         this.width = width;
     }
 
+    @Override
     public int getHeight() {
-        return height;
+        return this.height;
     }
 
     public void setHeight(int height) {
