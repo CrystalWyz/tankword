@@ -1,6 +1,12 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.facade;
 
+import cn.wyz.tankword.bean.BaseGameObject;
+import cn.wyz.tankword.bean.Tank;
+import cn.wyz.tankword.bean.Wall;
+import cn.wyz.tankword.constant.Dir;
+import cn.wyz.tankword.constant.Group;
 import cn.wyz.tankword.cor.ColliderChain;
+import cn.wyz.tankword.mgr.PropertiesMgr;
 
 import java.awt.*;
 import java.util.ArrayList;

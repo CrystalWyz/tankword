@@ -1,4 +1,6 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.bean;
+
+import cn.wyz.tankword.bean.BaseGameObject;
 
 import java.awt.*;
 

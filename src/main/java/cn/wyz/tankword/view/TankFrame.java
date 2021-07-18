@@ -1,5 +1,8 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.view;
 
+import cn.wyz.tankword.constant.Dir;
+import cn.wyz.tankword.facade.GameModel;
+import cn.wyz.tankword.mgr.PropertiesMgr;
 import cn.wyz.tankword.strategy.FireStrategy;
 
 import java.awt.*;

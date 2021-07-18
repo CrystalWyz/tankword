@@ -1,6 +1,6 @@
 package cn.wyz.tankword.cor;
 
-import cn.wyz.tankword.BaseGameObject;
+import cn.wyz.tankword.bean.BaseGameObject;
 
 import java.util.LinkedList;
 import java.util.List;

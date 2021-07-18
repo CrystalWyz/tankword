@@ -1,6 +1,9 @@
 package cn.wyz.tankword.cor;
 
-import cn.wyz.tankword.*;
+import cn.wyz.tankword.bean.BaseGameObject;
+import cn.wyz.tankword.bean.Tank;
+import cn.wyz.tankword.bean.Wall;
+import cn.wyz.tankword.constant.Group;
 
 /**
  * @author wangnanxiang

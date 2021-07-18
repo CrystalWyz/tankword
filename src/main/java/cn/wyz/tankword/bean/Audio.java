@@ -1,5 +1,5 @@
 
-package cn.wyz.tankword;
+package cn.wyz.tankword.bean;
 
 import java.io.IOException;
 
@@ -7,7 +7,6 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
-import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.SourceDataLine;
 
 public class Audio {

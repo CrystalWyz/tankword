@@ -1,4 +1,6 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.mgr;
+
+import cn.wyz.tankword.utils.ImageUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

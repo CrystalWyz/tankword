@@ -1,4 +1,4 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.bean;
 
 import java.awt.*;
 

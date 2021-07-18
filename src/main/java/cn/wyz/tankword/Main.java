@@ -1,6 +1,6 @@
 package cn.wyz.tankword;
 
-import java.util.Objects;
+import cn.wyz.tankword.view.TankFrame;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {

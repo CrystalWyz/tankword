@@ -1,4 +1,7 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.bean;
+
+import cn.wyz.tankword.facade.GameModel;
+import cn.wyz.tankword.mgr.ResourceMgr;
 
 import java.awt.*;
 
