@@ -13,11 +13,15 @@ public class GameModel {
 
     private static final GameModel GAME_MODEL = new GameModel();
 
+    static {
+        GAME_MODEL.init();
+    }
+
 //    private List<Bullet> bulletList = new ArrayList<>();
 //    private List<Tank> tanks = new ArrayList<>();
 //    private List<Explode> explodeList = new ArrayList<>();
     private List<BaseGameObject> baseGameObjectList = new ArrayList<>();
-    private final Tank tank = new Tank(200, 600 , Dir.UP, Group.GOOD);
+    private static Tank tank;
 //    private final Collider bulletTankCollider = new BulletTankCollider();
 //    private final Collider tankTankCollider = new TankTankCollider();
     private final ColliderChain colliderChain = new ColliderChain();
@@ -39,10 +43,16 @@ public class GameModel {
     }
 
     private GameModel() {
+
+    }
+
+    private void init() {
+        tank = new Tank(200, 600 , Dir.UP, Group.GOOD);
+
         int initTankCount = PropertiesMgr.getInteger("initTankCount");
         //初始化敌方坦克
         for (int i = 0; i < initTankCount; i++) {
-            this.add(new Tank(i * 60, 60, Dir.DOWN, Group.BAD));
+            new Tank(i * 60, 60, Dir.DOWN, Group.BAD);
         }
 
         this.add(new Wall(150, 150, 200, 50));

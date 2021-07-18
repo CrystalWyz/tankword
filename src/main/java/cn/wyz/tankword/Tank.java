@@ -36,6 +36,8 @@ public class Tank extends BaseGameObject {
         this.rectangle.y = y;
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
+
+        GameModel.getInstance().getBaseGameObjectList().add(this);
     }
 
     public int getLastX() {
