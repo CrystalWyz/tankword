@@ -9,6 +9,7 @@ import cn.wyz.tankword.cor.ColliderChain;
 import cn.wyz.tankword.mgr.PropertiesMgr;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,5 +97,27 @@ public class GameModel {
 
     public Tank getMainTank() {
         return tank;
+    }
+
+    public void save() {
+        File file = new File("./tank.data");
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+            oos.writeObject(tank);
+            oos.writeObject(baseGameObjectList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void load() {
+        File file = new File("./tank.data");
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+            tank = (Tank) ois.readObject();
+            baseGameObjectList = (List<BaseGameObject>) ois.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

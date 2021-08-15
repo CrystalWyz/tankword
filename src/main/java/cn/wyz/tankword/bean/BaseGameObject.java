@@ -1,11 +1,12 @@
 package cn.wyz.tankword.bean;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * @author wangnanxiang
  */
-public abstract class BaseGameObject {
+public abstract class BaseGameObject implements Serializable {
     protected int x, y;
     protected static final int WIDTH = 0;
     protected static final int HEIGHT = 0;

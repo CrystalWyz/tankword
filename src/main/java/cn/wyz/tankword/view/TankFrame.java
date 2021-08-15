@@ -81,6 +81,12 @@ public class TankFrame extends Frame {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                case KeyEvent.VK_S:
+                    GameModel.getInstance().save();
+                    break;
+                case KeyEvent.VK_L:
+                    GameModel.getInstance().load();
+                    break;
                 default:break;
             }
 
