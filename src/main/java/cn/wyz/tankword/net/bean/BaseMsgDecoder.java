@@ -2,6 +2,7 @@ package cn.wyz.tankword.net.bean;
 
 import cn.wyz.tankword.constant.Dir;
 import cn.wyz.tankword.constant.Group;
+import cn.wyz.tankword.net.constant.MsgType;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -15,17 +16,29 @@ import java.util.UUID;
 public class BaseMsgDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
-        if(byteBuf.readableBytes() < 33) {
+        if(byteBuf.readableBytes() < 8 ) {
             return;
         }
 
-        int x = byteBuf.readInt();
-        int y = byteBuf.readInt();
-        Dir dir = Dir.values()[byteBuf.readInt()];
-        boolean moving = byteBuf.readBoolean();
-        Group group = Group.values()[byteBuf.readInt()];
-        UUID uuid = new UUID(byteBuf.readLong(),byteBuf.readLong());
+        byteBuf.markReaderIndex();
 
-        list.add(new TankJoinMsg(x, y, dir, moving, group, uuid));
+        MsgType msgType = MsgType.values()[byteBuf.readInt()];
+        int length = byteBuf.readInt();
+
+        if(byteBuf.readableBytes() < length) {
+            byteBuf.resetReaderIndex();
+            return;
+        }
+
+        byte[] bytes = new byte[length];
+        byteBuf.readBytes(bytes);
+
+        switch (msgType) {
+            case TankJoin:
+                TankJoinMsg tankJoinMsg = new TankJoinMsg();
+                tankJoinMsg.parse(bytes);
+                break;
+            default:
+        }
     }
 }

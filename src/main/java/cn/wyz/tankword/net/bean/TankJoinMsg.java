@@ -4,11 +4,10 @@ import cn.wyz.tankword.bean.Tank;
 import cn.wyz.tankword.constant.Dir;
 import cn.wyz.tankword.constant.Group;
 import cn.wyz.tankword.net.client.TankClient;
+import cn.wyz.tankword.net.constant.MsgType;
 import cn.wyz.tankword.ui.TankFrame;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.UUID;
 
 /**
@@ -22,6 +21,10 @@ public class TankJoinMsg extends BaseMsg {
     private boolean moving;
     private Group group;
     private UUID uuid;
+
+    public TankJoinMsg() {
+
+    }
 
     public int getX() {
         return x;
@@ -117,6 +120,32 @@ public class TankJoinMsg extends BaseMsg {
             e.printStackTrace();
         }
         return baos.toByteArray();
+    }
+
+    @Override
+    public MsgType getMsgType() {
+        return MsgType.TankJoin ;
+    }
+
+    @Override
+    public void parse(byte[] bytes) {
+        DataInputStream dis = new DataInputStream(new ByteArrayInputStream(bytes));
+        try {
+            this.x = dis.readInt();
+            this.y = dis.readInt();
+            this.dir = Dir.values()[dis.readInt()];
+            this.moving = dis.readBoolean();
+            this.group = Group.values()[dis.readInt()];
+            this.uuid = new UUID(dis.readLong(),dis.readLong());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                dis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
