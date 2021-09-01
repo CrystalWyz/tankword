@@ -1,4 +1,4 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,7 +1,14 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.bean;
+
+import cn.wyz.tankword.constant.Group;
+import cn.wyz.tankword.mgr.ResourceMgr;
+import cn.wyz.tankword.net.bean.TankJoinMsg;
+import cn.wyz.tankword.ui.TankFrame;
+import cn.wyz.tankword.constant.Dir;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * @author wangnanxiang
@@ -18,6 +25,7 @@ public class Tank {
     private boolean moving = true;
     private final Random random = new Random();
     private final Rectangle rectangle = new Rectangle();
+    private final UUID uuid;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.x = x;
@@ -33,6 +41,17 @@ public class Tank {
         this.rectangle.y = y;
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
+        this.uuid = UUID.randomUUID();
+    }
+
+    public Tank(TankJoinMsg tankJoinMsg) {
+        this.x = tankJoinMsg.getX();
+        this.y = tankJoinMsg.getY();
+        this.dir = tankJoinMsg.getDir();
+        this.moving = tankJoinMsg.isMoving();
+        this.group = tankJoinMsg.getGroup();
+        this.uuid = tankJoinMsg.getUuid();
+        this.tankFrame = TankFrame.getInstance();
     }
 
     public int getX() {
@@ -73,6 +92,10 @@ public class Tank {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public void paint(Graphics g) {

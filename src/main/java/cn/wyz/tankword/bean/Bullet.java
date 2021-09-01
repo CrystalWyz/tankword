@@ -1,4 +1,9 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.bean;
+
+import cn.wyz.tankword.constant.Group;
+import cn.wyz.tankword.mgr.ResourceMgr;
+import cn.wyz.tankword.ui.TankFrame;
+import cn.wyz.tankword.constant.Dir;
 
 import java.awt.*;
 

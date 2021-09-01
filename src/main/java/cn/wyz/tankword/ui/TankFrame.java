@@ -1,12 +1,19 @@
-package cn.wyz.tankword;
+package cn.wyz.tankword.ui;
+
+import cn.wyz.tankword.bean.Bullet;
+import cn.wyz.tankword.bean.Explode;
+import cn.wyz.tankword.bean.Tank;
+import cn.wyz.tankword.constant.Dir;
+import cn.wyz.tankword.constant.Group;
+import cn.wyz.tankword.mgr.PropertiesMgr;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 /**
  * @author wangnanxiang
@@ -16,17 +23,32 @@ public class TankFrame extends Frame {
     public static final int GAME_WIDTH = PropertiesMgr.getInteger("gameWidth");
     public static final int GAME_HEIGHT = PropertiesMgr.getInteger("gameHeight");
 
-    Tank tank = new Tank(200, 600 , Dir.UP, Group.GOOD, this);
-    List<Bullet> bulletList = new ArrayList<>();
-    List<Tank> tanks = new ArrayList<>();
-    List<Explode> explodeList = new ArrayList<>();
+    private static final TankFrame INSTANCE = new TankFrame();
+
+    Tank tank = new Tank(new Random().nextInt(800), new Random().nextInt(600) , Dir.UP, Group.GOOD, this);
+    public List<Bullet> bulletList = new ArrayList<>();
+    public Map<UUID, Tank> tanks = new HashMap<>();
+    public List<Explode> explodeList = new ArrayList<>();
 
     boolean bU = false, bD = false, bL = false, bR = false;
-    public TankFrame() {
+
+    public void addTank(Tank tank) {
+        this.tanks.put(tank.getUuid(), tank);
+    }
+
+    public Tank getMainTank() {
+        return tank;
+    }
+
+    public static TankFrame getInstance() {
+        return INSTANCE;
+    }
+
+    private TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("tank war");
-        setVisible(true);
+//        setVisible(true);
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -67,9 +89,8 @@ public class TankFrame extends Frame {
             bulletList.get(i).paint(g);
         }
 
-        for(int i = 0; i < tanks.size(); i++) {
-            tanks.get(i).paint(g);
-        }
+        tanks.values().parallelStream().forEach((e) -> e.paint(g));
+
         for (int i = 0; i < explodeList.size(); i++) {
             explodeList.get(i).paint(g);
         }
