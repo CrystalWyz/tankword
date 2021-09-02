@@ -7,6 +7,7 @@ import cn.wyz.tankword.ui.TankFrame;
 import cn.wyz.tankword.constant.Dir;
 
 import java.awt.*;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.UUID;
 
@@ -37,7 +38,7 @@ public class Tank {
             moving = false;
         }
 
-        this.rectangle.x = this.x;
+        this.rectangle.x = x;
         this.rectangle.y = y;
         this.rectangle.width = WIDTH;
         this.rectangle.height = HEIGHT;
@@ -52,6 +53,11 @@ public class Tank {
         this.group = tankJoinMsg.getGroup();
         this.uuid = tankJoinMsg.getUuid();
         this.tankFrame = TankFrame.getInstance();
+
+        this.rectangle.x = this.x;
+        this.rectangle.y = this.y;
+        this.rectangle.width = WIDTH;
+        this.rectangle.height = HEIGHT;
     }
 
     public int getX() {
@@ -96,6 +102,14 @@ public class Tank {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
     }
 
     public void paint(Graphics g) {
@@ -146,10 +160,10 @@ public class Tank {
             default:break;
         }
 
-        if(this.group == Group.BAD && random.nextInt(100) > 95) {
-            this.fire();
-            this.randomDir();
-        }
+//        if(this.group == Group.BAD && random.nextInt(100) > 95) {
+//            this.fire();
+//            this.randomDir();
+//        }
 
         boundsCheck();
 
@@ -179,7 +193,7 @@ public class Tank {
     public void fire() {
         int bX = x + ResourceMgr.goodTankU.getWidth() / 2 - ResourceMgr.bulletU.getWidth() / 2;
         int bY = y + ResourceMgr.goodTankU.getHeight() / 2 - ResourceMgr.bulletU.getHeight() / 2;
-        tankFrame.bulletList.add(new Bullet(bX, bY, dir, this.group, tankFrame));
+        tankFrame.bulletList.add(new Bullet(bX, bY, dir, this.group, this.getUuid(), tankFrame));
     }
 
     public void die() {
@@ -187,5 +201,6 @@ public class Tank {
         int eX = this.x + Tank.WIDTH / 2 - Explode.WIDTH / 2;
         int eY = this.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
         tankFrame.explodeList.add(new Explode(eX, eY, tankFrame));
+        System.out.println(tankFrame.tanks.size());
     }
 }

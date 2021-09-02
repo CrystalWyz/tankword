@@ -2,10 +2,14 @@ package cn.wyz.tankword.bean;
 
 import cn.wyz.tankword.constant.Group;
 import cn.wyz.tankword.mgr.ResourceMgr;
+import cn.wyz.tankword.net.bean.TankDieMsg;
+import cn.wyz.tankword.net.client.TankClient;
 import cn.wyz.tankword.ui.TankFrame;
 import cn.wyz.tankword.constant.Dir;
 
 import java.awt.*;
+import java.util.Iterator;
+import java.util.UUID;
 
 public class Bullet {
     private static final int SPEED = 15;
@@ -17,13 +21,15 @@ public class Bullet {
     private final TankFrame tankFrame;
     private Group group = Group.BAD;
     private Rectangle rectangle = new Rectangle();
+    private UUID uuid;
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+    public Bullet(int x, int y, Dir dir, Group group, UUID uuid, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
         this.tankFrame = tankFrame;
+        this.uuid = uuid;
 
         this.rectangle.x = this.x;
         this.rectangle.y = y;
@@ -61,6 +67,14 @@ public class Bullet {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public void paint(Graphics g) {
@@ -112,12 +126,16 @@ public class Bullet {
     }
 
     public void collideWith(Tank tank) {
-        if(this.getGroup() == tank.getGroup()) {
+        /*if(this.getGroup() == tank.getGroup()) {
+            return;
+        }*/
+        if(this.uuid.equals(tank.getUuid())) {
             return;
         }
-        if(this.rectangle.intersects(tank.getRectangle())) {
+        if(this.live && tank.live && this.rectangle.intersects(tank.getRectangle())) {
             tank.die();
             this.die();
+            TankClient.getInstance().sendMsg(new TankDieMsg(tank));
         }
     }
 

@@ -14,9 +14,12 @@ import java.util.UUID;
  * @author wnx
  */
 public class BaseMsgDecoder extends ByteToMessageDecoder {
+
+    public static final int MSG_HEAD_LENGTH = 8;
+
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
-        if(byteBuf.readableBytes() < 8 ) {
+        if(byteBuf.readableBytes() < MSG_HEAD_LENGTH) {
             return;
         }
 
@@ -33,12 +36,16 @@ public class BaseMsgDecoder extends ByteToMessageDecoder {
         byte[] bytes = new byte[length];
         byteBuf.readBytes(bytes);
 
-        switch (msgType) {
+        BaseMsg baseMsg = (BaseMsg)Class.forName("cn.wyz.tankword.net.bean." + msgType.toString() + "Msg")
+                .getDeclaredConstructor().newInstance();
+        baseMsg.parse(bytes);
+        list.add(baseMsg);
+        /*switch (msgType) {
             case TankJoin:
                 TankJoinMsg tankJoinMsg = new TankJoinMsg();
                 tankJoinMsg.parse(bytes);
                 break;
             default:
-        }
+        }*/
     }
 }

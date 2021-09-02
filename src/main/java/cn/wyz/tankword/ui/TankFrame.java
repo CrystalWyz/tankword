@@ -6,6 +6,11 @@ import cn.wyz.tankword.bean.Tank;
 import cn.wyz.tankword.constant.Dir;
 import cn.wyz.tankword.constant.Group;
 import cn.wyz.tankword.mgr.PropertiesMgr;
+import cn.wyz.tankword.net.bean.TankDirChangedMsg;
+import cn.wyz.tankword.net.bean.TankFireMsg;
+import cn.wyz.tankword.net.bean.TankStartMovingMsg;
+import cn.wyz.tankword.net.bean.TankStopMsg;
+import cn.wyz.tankword.net.client.TankClient;
 
 import java.awt.*;
 import java.util.*;
@@ -40,6 +45,10 @@ public class TankFrame extends Frame {
         return tank;
     }
 
+    public Tank getTankByUuid(UUID uuid) {
+        return tanks.get(uuid);
+    }
+
     public static TankFrame getInstance() {
         return INSTANCE;
     }
@@ -57,6 +66,7 @@ public class TankFrame extends Frame {
             }
         });
         addKeyListener(new MyKeyListener());
+        tanks.put(tank.getUuid(), tank);
     }
 
     Image offScreenImage = null;
@@ -84,21 +94,25 @@ public class TankFrame extends Frame {
         g.drawString("爆炸的数量:" + tanks.size(), 50, 110);
         g.setColor(color);
 
-        tank.paint(g);
         for(int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).paint(g);
         }
 
-        tanks.values().parallelStream().forEach((e) -> e.paint(g));
+        tanks.values().parallelStream().forEach((e) -> {
+            if(e.isLive()) {
+                e.paint(g);
+            }
+        });
 
         for (int i = 0; i < explodeList.size(); i++) {
             explodeList.get(i).paint(g);
         }
 
         //碰撞检测
+        Iterator<Tank> iterator = tanks.values().iterator();
         for (int i = 0; i < bulletList.size(); i++) {
-            for (int j = 0; j < tanks.size(); j++) {
-                bulletList.get(i).collideWith(tanks.get(j));
+            while (iterator.hasNext()) {
+                bulletList.get(i).collideWith(iterator.next());
             }
         }
     }
@@ -122,6 +136,8 @@ public class TankFrame extends Frame {
                     break;
                 case KeyEvent.VK_SPACE:
                     tank.fire();
+                    TankClient.getInstance().sendMsg(new TankFireMsg(tank));
+                    break;
                 default:break;
             }
 
@@ -153,10 +169,12 @@ public class TankFrame extends Frame {
     }
 
     private void setMainTankDir() {
+        Dir oldDir = tank.getDir();
         if(!bU && !bD && !bL && !bR) {
             tank.setMoving(false);
+            TankClient.getInstance().sendMsg(new TankStopMsg(tank));
         } else {
-            tank.setMoving(true);
+
             if(bU) {
                 tank.setDir(Dir.UP);
             }
@@ -168,6 +186,14 @@ public class TankFrame extends Frame {
             }
             if(bR) {
                 tank.setDir(Dir.RIGHT);
+            }
+            if(!tank.isMoving()) {
+                TankClient.getInstance().sendMsg(new TankStartMovingMsg(tank));
+            }
+            tank.setMoving(true);
+
+            if(oldDir != tank.getDir()) {
+                TankClient.getInstance().sendMsg(new TankDirChangedMsg(tank));
             }
         }
     }

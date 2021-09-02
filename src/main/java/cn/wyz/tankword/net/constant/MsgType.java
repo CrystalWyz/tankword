@@ -24,5 +24,9 @@ public enum MsgType {
     /*
        坦克发射类型
      */
-    BulletNew
+    TankFire,
+    /*
+       坦克死亡类型
+     */
+    TankDie
 }
